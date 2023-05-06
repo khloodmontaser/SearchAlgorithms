@@ -1,0 +1,29 @@
+def depthFirstSearch(problem: SearchProblem):
+
+    # Initialize the fringe with the start state and an empty list of steps.
+    
+    fringe = util.Stack()  # Create a stack data structure to keep track of the nodes to be explored.
+    expanded = set()  # Create a set to keep track of the states that have already been expanded.
+    fringe.push((problem.getStartState(), []))  # Add the start state and an empty list of steps to the fringe.
+
+    while not fringe.isEmpty():
+        # Pop the topmost node from the fringe.
+        state, steps = current_node = fringe.pop()
+
+        # If the state has already been expanded, skip this node.
+        if state in expanded:
+            continue
+
+        # Mark the state as expanded and check if it is a goal state.
+        expanded.add(state)
+        if problem.isGoalState(state):
+            return steps
+
+        # Generate all successors of the current node and add them to the fringe.
+        for successor, action, stepCost in problem.getSuccessors(state):
+            if successor not in expanded:
+                # Add the successor and the action that led to it to the fringe.
+                fringe.push((successor, steps + [action]))
+
+    # If no goal state is found, return None.
+    return None

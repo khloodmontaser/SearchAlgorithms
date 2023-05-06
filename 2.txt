@@ -1,0 +1,36 @@
+def breadthFirstSearch(problem):
+    """
+    Breadth-first search algorithm for a search problem.
+
+    :param problem: A search problem object.
+    :return: A list of actions that leads to a goal state, or None if no goal state is found.
+    """
+
+    # Initialize the fringe with the start state and an empty list of actions.
+    fringe = util.Queue()  # Create a queue data structure to keep track of the nodes to be explored.
+    visited = set()  # Create a set to keep track of the states that have already been visited.
+    fringe.push((problem.getStartState(), []))  # Add the start state and an empty list of actions to the fringe.
+
+    while not fringe.isEmpty():
+        # Pop the leftmost node from the fringe.
+        state, actions = fringe.pop()
+
+        # If the state has already been visited, skip this node.
+        if state in visited:
+            continue
+
+        # Mark the state as visited and check if it is a goal state.
+        visited.add(state)
+        if problem.isGoalState(state):
+            return actions
+
+        # Generate all successors of the current node and add them to the fringe.
+        for successor in problem.getSuccessors(state):
+            next_state, action, _ = successor
+            if next_state not in visited:
+                # Add the next state and the list of actions to the fringe.
+                next_actions = actions + [action]
+                fringe.push((next_state, next_actions))
+
+    # If no goal state is found, return None.
+    return None

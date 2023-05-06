@@ -1,0 +1,36 @@
+def uniformCostSearch(problem):
+    """
+    Uniform-cost search algorithm for a search problem.
+
+    :param problem: A search problem object.
+    :return: A list of actions that leads to a goal state, or None if no goal state is found.
+    """
+
+    # Initialize the fringe with the start state and an empty list of actions, with a priority of 0.
+    fringe = util.PriorityQueue()
+    visited = set()
+    fringe.push((problem.getStartState(), [], 0), 0)
+
+    while not fringe.isEmpty():
+        # Pop the node with the lowest path cost from the fringe.
+        state, actions, cost = fringe.pop()
+
+        # If the state has already been visited, skip this node.
+        if state in visited:
+            continue
+
+        # Mark the state as visited and check if it is a goal state.
+        visited.add(state)
+        if problem.isGoalState(state):
+            return actions
+
+        # Generate all successors of the current node and add them to the fringe with their path cost as the priority.
+        for successor in problem.getSuccessors(state):
+            next_state, action, step_cost = successor
+            if next_state not in visited:
+                next_actions = actions + [action]
+                next_cost = cost + step_cost
+                fringe.push((next_state, next_actions, next_cost), next_cost)
+
+    # If no goal state is found, return None.
+    return None
