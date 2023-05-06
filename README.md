@@ -223,10 +223,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     # Return the path to the goal state.
     return toDirection
 
-
-
-# Abbreviations
+#Abbreviations 
 bfs = breadthFirstSearch
+
 dfs = depthFirstSearch
+
 astar = aStarSearch
+
 ucs = uniformCostSearch
